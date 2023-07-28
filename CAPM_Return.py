@@ -3,11 +3,10 @@
 import streamlit as st
 import pandas as pd
 import yfinance as yf
-#from pandas_datareader import wb
 import pandas_datareader.data as web
 import datetime
 
-st.set_page_config(page_title = "CAMP",
+st.set_page_config(page_title = "CAPM",
     page_icon = "Chart_with:upwards_trend",
     layout = 'wide')
 
@@ -24,13 +23,12 @@ with col1:
 with col2:
     year = st.number_input("Number of Years", 1, 10)
 
-
 # Downloading data from SP500
 
 end = datetime.date.today()
 
 start = datetime.date(datetime.date.today().year-year, datetime.date.today().month, datetime.date.today().day)
 
-SP500 = wb.DataReader(['sp500', 'fred', start, end])
+sp500 = web.DataReader(['sp500', 'fred', start, end])
 
-print(SP500.head())
+print(sp500.head())
