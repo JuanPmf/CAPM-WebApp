@@ -3,8 +3,9 @@
 import streamlit as st
 import pandas as pd
 import yfinance as yf
-import pandas_datareader.data as web
-import datetime
+import pandas_datareader.data as pdr
+import datetime as dt
+
 
 st.set_page_config(page_title = "CAPM",
     page_icon = "Chart_with:upwards_trend",
@@ -19,16 +20,16 @@ st.title("CAMP: Capital Asset Pricing Model")
 col1, col2 = st.columns([1,1])
 
 with col1:
-    stocks_list = st.multiselect("Choose 4 stocks", ("TSLA","APPL", "NFLX", "MSFT", "MGM", "NVDA","GOOGL"), ["TSLA","APPL", "NFLX","GOOGL"])
+    stocks_list = st.multiselect("Choose 4 stocks", ("TSLA","APPL", "NFLX", "MSFT", "MGM", "NVDA","GOOGL"), ["TSLA","APPL", "NFLX"])
 with col2:
     year = st.number_input("Number of Years", 1, 10)
 
 # Downloading data from SP500
 
-end = datetime.date.today()
+start = dt.date(dt.date.today().year-year, dt.date.today().month, dt.date.today().day)
 
-start = datetime.date(datetime.date.today().year-year, datetime.date.today().month, datetime.date.today().day)
+end = dt.date.today()
 
-sp500 = web.DataReader(['sp500', 'fred', start, end])
+sp500 = pdr.get_data_yahoo(stocks_list, start, end)
 
-print(sp500.head())
+sp500
