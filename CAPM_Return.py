@@ -6,6 +6,7 @@ import yfinance as yf
 import pandas_datareader.data as pdr
 import datetime as dt
 
+yf.pdr_override()
 
 st.set_page_config(page_title = "CAPM",
     page_icon = "Chart_with:upwards_trend",
@@ -20,7 +21,7 @@ st.title("CAMP: Capital Asset Pricing Model")
 col1, col2 = st.columns([1,1])
 
 with col1:
-    stocks_list = st.multiselect("Choose 4 stocks", ("TSLA","APPL", "NFLX", "MSFT", "MGM", "NVDA","GOOGL"), ["TSLA","APPL", "NFLX"])
+    stocks_list = st.multiselect("Choose 4 stocks", ["TSLA","APPL", "NFLX", "MSFT", "MGM", "NVDA","GOOGL"], ["TSLA"])
 with col2:
     year = st.number_input("Number of Years", 1, 10)
 
@@ -33,3 +34,6 @@ end = dt.date.today()
 sp500 = pdr.get_data_yahoo(stocks_list, start, end)
 
 sp500
+
+
+# run D:\Projects\CAMP-WebApp\CAPM_Return.py
