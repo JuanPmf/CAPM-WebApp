@@ -5,11 +5,11 @@ import pandas as pd
 import yfinance as yf
 import pandas_datareader.data as pdr
 import datetime as dt
-# To solve string indeces error  
+
+# To solve string indeces error
 yf.pdr_override()
 
 #Get NASDAQ tickers from local CSV
-
 tickers = pd.read_csv('D:/Projects/CAMP-WebApp/NASDAQ.csv')
 
 st.set_page_config(page_title = "CAPM",
@@ -36,6 +36,5 @@ end = dt.date.today()
 sp500 = pdr.get_data_yahoo(stocks_list, start, end)
 
 sp500
-
 
 #Run from anaconda promt: streamlit run D:\Projects\CAMP-WebApp\CAPM_Return.py
