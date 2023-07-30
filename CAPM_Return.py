@@ -23,18 +23,22 @@ st.title("CAMP: Capital Asset Pricing Model")
 col1, col2 = st.columns([1,1])
 
 with col1:
-    stocks_list = st.multiselect("Choose 4 stocks", (tickers['Symbol'].tolist()), ["NFLX"])
+    stocks_list = st.multiselect("Choose 4 stocks", (tickers['Symbol'].tolist()), ["TSLA"])
 with col2:
     year = st.number_input("Number of Years", 1, 10)
 
 # Downloading data from SP500
 
 start = dt.date(dt.date.today().year-year, dt.date.today().month, dt.date.today().day)
-
 end = dt.date.today()
-
 sp500 = pdr.get_data_yahoo(stocks_list, start, end)
 
-sp500
+stocks_df = pd.DataFrame()
+
+for stock in stocks_list:
+    data = yf.download(stock, period= f'{year}y')
+    stocks_df[f'{stock}'] = data['Close']
+
+stocks_df.head()
 
 #Run from anaconda promt: streamlit run D:\Projects\CAMP-WebApp\CAPM_Return.py
