@@ -65,10 +65,56 @@ with col2:
     st.markdown("### Dataframe Tail")
     st.dataframe(stocks_df.tail(), use_container_width= True)
 
-
+# Plot stocks.
 col1, col2 = st.columns([1,1])
 with col1:
-    st.markdown("### Price of all the stocks")
+    st.markdown("### Price of Selected Stocks")
     st.plotly_chart(CAPM_Functions.interactive_plot(stocks_df))
+# Plot stocks after normalization
+with col2:
+    #print(CAPM_Functions.normalize(stocks_df)) Normalizing function
+    st.markdown("### Price After Normalization")
+    st.plotly_chart(CAPM_Functions.interactive_plot(CAPM_Functions.normalize(stocks_df)))
+
+# Daily return
+
+stocks_daily_return = CAPM_Functions.daily_return(stocks_df)
+print(stocks_daily_return.head())
+
+beta={}
+alpha={}
+
+for i in stocks_daily_return.columns:
+    if i !='Date' and i != 'NSDQ':
+        b, a = CAPM_Functions.calculate_beta(stocks_daily_return, i)
+
+        beta[i] = b
+        alpha[i] = a
+print(beta, alpha)
+
+beta_df = pd.DataFrame(columns= ['Stock', 'Beta Value'])
+beta_df['Stock']=beta.keys()
+beta_df['Beta Value']= [str(round(i,2)) for i in beta.values()]
+
+with col1:
+    st.markdown('### Calculated Beta Value')
+    st.dataframe(beta_df, use_container_width= True)
+
+rf = 0
+rm = stocks_daily_return['NSDQ'].mean()*252
+
+return_df = pd.DataFrame()
+return_value = []
+for stock, value in beta.items():
+    return_value.append(str(round(rf+(value*(rm+rf)),2)))
+
+return_df['Stock'] = stocks_list
+
+return_df['Return Value'] = return_value
+
+with col2:
+    st.markdown('### Calculated Return Using CAPM')
+    st.dataframe(return_df, use_container_width=True)
+
 
 #Run from anaconda promt: streamlit run D:\Projects\CAMP-WebApp\CAPM_Return.py
