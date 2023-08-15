@@ -31,7 +31,7 @@ def daily_return(df):
 # Function to calculate Beta
 
 def calculate_beta(stocks_daily_return, stock):
-    rm = stocks_daily_return['NSDQ'].mean()*252
+    rm = stocks_daily_return['S&P500'].mean()*252
 
-    b, a = np.polyfit(stocks_daily_return['NSDQ'], stocks_daily_return[stock],1)
+    b, a = np.polyfit(stocks_daily_return['S&P500'], stocks_daily_return[stock],1)
     return b,a
