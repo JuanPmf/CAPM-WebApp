@@ -11,7 +11,7 @@ yf.pdr_override()
 
 
 #Get NASDAQ tickers from local CSV
-tickers = pd.read_csv('D:/Projects/CAMP-WebApp/NASDAQ.csv')
+tickers = pd.read_csv('D:/Projects/CAMP-WebApp/TICKERS.csv')
 
 st.set_page_config(page_title = "CAPM",
     page_icon = "Chart_with:upwards_trend",
